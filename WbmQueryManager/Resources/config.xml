@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.2/engine/Shopware/Components/Plugin/schema/config.xsd">
+    <elements>
+        <element type="text">
+            <name>mail_address_receiver</name>
+            <label lang="de">CSV Exporte an E-Mail Adresse versenden</label>
+            <label lang="en">Send CSV Exports to an E-Mail Address</label>
+            <value/>
+        </element>
+        <element type="boolean">
+            <name>autocomplete</name>
+            <label lang="de">SQL Autocomplete aktivieren</label>
+            <label lang="en">Active SQL Autocompletion</label>
+            <value>true</value>
+        </element>
+    </elements>
+</config>

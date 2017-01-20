@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="wbm_query_manager.subscriber.controller_wbm_query_manager" class="WbmQueryManager\Subscriber\Backend\QueryManagerController">
+            <argument type="service" id="service_container" />
+            <tag name="shopware.event_subscriber" />
+        </service>
+
+        <service id="wbm_query_manager.subscriber.backend.post_dispatch" class="WbmQueryManager\Subscriber\Backend\PostDispatch">
+            <argument type="service" id="service_container" />
+            <tag name="shopware.event_subscriber" />
+        </service>
+
+        <service id="wbm_query_manager.subscriber.backend.cron_query_manager" class="WbmQueryManager\Subscriber\Backend\QueryManagerCron">
+            <argument type="service" id="service_container" />
+            <tag name="shopware.event_subscriber" />
+        </service>
+    </services>
+</container>
