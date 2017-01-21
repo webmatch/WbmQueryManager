@@ -9,7 +9,6 @@ Ext.define('Shopware.apps.WbmQueryManager.view.result.Window', {
     height: 420,
     width: 568,
     layout: 'fit',
- 
     initComponent: function() {
         var me = this;
         me.items = [
@@ -18,7 +17,6 @@ Ext.define('Shopware.apps.WbmQueryManager.view.result.Window', {
                 jsonData: me.jsonData
             }
         ];
-    
         me.callParent(arguments);
     }
 

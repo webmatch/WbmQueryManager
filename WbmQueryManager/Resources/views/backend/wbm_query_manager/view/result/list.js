@@ -13,13 +13,7 @@ Ext.define('Shopware.apps.WbmQueryManager.view.result.List', {
             autoDestroy: true
         });
         me.store.loadData(me.jsonData.records);
-        me.registerEvents();
         me.columns = me.jsonData.columns;
         me.callParent(arguments);
-    },
-    registerEvents:function () {
-        this.addEvents(
-            );
-        return true;
     }
 });

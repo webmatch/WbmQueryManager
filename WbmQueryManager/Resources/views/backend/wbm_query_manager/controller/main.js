@@ -1,13 +1,11 @@
 //{namespace name=backend/plugins/wbm/querymanager}
 //
 Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
- 
     /**
      * Extend from the standard ExtJS 4 controller
      * @string
      */
     extend: 'Ext.app.Controller',
- 
     mainWindow: null,
     /** Contains all text messages for this controller */
     messages: {
@@ -22,9 +20,9 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
      * @return void
      */
     init: function() {
+        var me = this;
 
-        var me = this; 
-        var mainStore= me.getStore('Query').load({
+        me.getStore('Query').load({
             scope: this,
             callback: function(records, operation, success) {
                 me.mainWindow = me.getView('main.Window').create({
@@ -34,10 +32,8 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
             }
         });        
 
-
         me.callParent(arguments);
         me.control({
-
             'query-manager-detail button[action=save]' : {
                 'click' : function(btn) {
                     this.onSave(btn);
@@ -63,18 +59,8 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
                 deleteQuery: me.deleteQuery,
                 cloneQuery: me.cloneQuery
             }
-
-
         });
-        
-        
     },
-   
-    
-    /**
-     * @param btn Ext.button.Button
-     * @return void
-     */
     onSave: function(btn) {
         var win     = btn.up('window'), 
         form    = win.down('form'), 
@@ -88,7 +74,6 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
         
         formBasis.updateRecord(record);
 
-        // Check if there the form is valid -> see model/supplier.js
         if (formBasis.isValid()) {
             record.save({
                 params: {
@@ -100,19 +85,16 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
                         record.set("id", newId);
                     }
                     store.load();
-                    //win.close();
                     Shopware.Msg.createGrowlMessage('','{s name="querySaveSuccess"}Query wurde erfolgreich gespeichert{/s}', '');                                
                 },
                 failure: function(rec, op) {
                     store.load();
-                    //win.close();
                     Shopware.Msg.createGrowlMessage('','{s name="querySaveError"}Fehler beim Speichern des Query: {/s}'+op.request.scope.reader.jsonData["message"], '');
                     
                 }
             });
         }
     },
-    
     onReset: function(btn) {
         var win     = btn.up('window'), 
         form    = win.down('form'), 
@@ -125,8 +107,7 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
         }
         
         form.loadRecord(record);
-    },  
-    
+    },
     openQueryDetail:function (view, rowIndex) {
         var me = this,
         record = me.getStore('Query').getAt(rowIndex);
@@ -185,7 +166,6 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
         record = store.getAt(rowIndex);
         me.record = record;
 
-        //use the model from the record because article in split view mode can be outdated
         if (me.record instanceof Ext.data.Model && me.record.get('id') > 0) {
             Ext.MessageBox.confirm('Query löschen?', '{s name="queryDeleteAlert"}Sind Sie sicher, dass Sie das Query löschen wollen?{/s}' , function (response) {
                 if ( response !== 'yes' ) {
@@ -210,7 +190,6 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
         record = store.getAt(rowIndex);
         me.record = record;
 
-        //use the model from the record because article in split view mode can be outdated
         if (me.record instanceof Ext.data.Model && me.record.get('id') > 0) {
             Ext.Ajax.request({
                 url: '{url controller="WbmQueryManager" action="clone"}',
@@ -227,6 +206,5 @@ Ext.define('Shopware.apps.WbmQueryManager.controller.Main', {
             });
         }
     }
-   
 });
  

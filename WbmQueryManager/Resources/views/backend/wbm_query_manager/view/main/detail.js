@@ -13,19 +13,21 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
     initComponent: function() {
         var me = this;
         
-        me.dockedItems = [{
-            xtype: 'toolbar',
-            dock: 'bottom',
-            cls: 'shopware-toolbar',
-            ui: 'shopware-ui',
-            items: me.getButtons()
-        },{
-            xtype: 'toolbar',
-            dock: 'bottom',
-            cls: 'shopware-toolbar',
-            ui: 'shopware-ui',
-            items: me.getActions()
-        }];
+        me.dockedItems = [
+            {
+                xtype: 'toolbar',
+                dock: 'bottom',
+                cls: 'shopware-toolbar',
+                ui: 'shopware-ui',
+                items: me.getButtons()
+            },{
+                xtype: 'toolbar',
+                dock: 'bottom',
+                cls: 'shopware-toolbar',
+                ui: 'shopware-ui',
+                items: me.getActions()
+            }
+        ];
     
         me.editorField = Ext.create('Shopware.form.field.CodeMirror', {
             fieldLabel: '{s name="sqlFieldLabel"}SQL{/s}',
@@ -72,20 +74,21 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
     getItems:function () {
         var me = this;
         return [
-                {
-                    fieldLabel: '{s name="nameFieldLabel"}Name{/s}',
-                    labelWidth: 50,
-                    anchor: '100%',
-                    name: 'name',
-                    allowBlank: false
-                },
-                me.editorField,
-                {
-                    xtype: 'fieldset',
-                    title: '{s name="cronJobTitle"}Cron-Job{/s}',
-                    defaultType: 'textfield',
-                    layout: 'column',
-                    items :[{
+            {
+                fieldLabel: '{s name="nameFieldLabel"}Name{/s}',
+                labelWidth: 50,
+                anchor: '100%',
+                name: 'name',
+                allowBlank: false
+            },
+            me.editorField,
+            {
+                xtype: 'fieldset',
+                title: '{s name="cronJobTitle"}Cron-Job{/s}',
+                defaultType: 'textfield',
+                layout: 'column',
+                items :[
+                    {
                         fieldLabel: '{s name="activeFieldLabel"}aktiv{/s}',
                         labelWidth: 30,
                         name: 'hasCronjob',
@@ -150,9 +153,10 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                         xtype: 'displayfield',
                         columnWidth: .35,
                         renderer: Ext.util.Format.dateRenderer('d.m.Y H:i:s')
-                    }]
-                }
-        ];            
+                    }
+                ]
+            }
+        ];
     },
     getButtons : function()
     {

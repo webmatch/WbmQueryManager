@@ -60,7 +60,7 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
         $params = $this->Request()->getPost();
         
         if($params['hasCronjob'] && empty($params['nextRun'])){
-            $params['nextRun'] = date('Y-m-d H:i:s');
+            $params['nextRun'] = new \DateTime();
         }
         
         $query = new Query();
@@ -83,7 +83,7 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
         $id = (int)$this->Request()->get('id');
         
         if($params['hasCronjob'] && empty($params['nextRun'])){
-            $params['nextRun'] = date('Y-m-d H:i:s');
+            $params['nextRun'] = new \DateTime();
         }
 
         /** @var Query $query */
