@@ -184,7 +184,7 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
 
                     $outputBuffer = fopen("php://output", 'w');
                     foreach(array_merge(array(0 => $recordFields),$records) as $val) {
-                        fputcsv($outputBuffer, $val, ';');
+                        fputcsv($outputBuffer, $val, $this->container->get('config')->getByNamespace('WbmQueryManager', 'csv_field_separator'));
                     }
                     fclose($outputBuffer);
 

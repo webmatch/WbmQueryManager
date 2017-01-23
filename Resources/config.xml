@@ -7,6 +7,12 @@
             <label lang="en">Send CSV Exports to an E-Mail Address</label>
             <value/>
         </element>
+        <element type="text">
+            <name>csv_field_separator</name>
+            <label lang="de">CSV Trennzeichen für Spalten</label>
+            <label lang="en">CSV Field Separator</label>
+            <value>,</value>
+        </element>
         <element type="boolean">
             <name>autocomplete</name>
             <label lang="de">SQL Autocomplete aktivieren</label>
