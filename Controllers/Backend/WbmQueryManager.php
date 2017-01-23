@@ -23,7 +23,10 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
 
     public function postDispatch()
     {
-        if ($this->Request()->getActionName() === 'load') {
+        if (
+            $this->Request()->getActionName() === 'load' &&
+            $this->container->get('config')->getByNamespace('WbmQueryManager', 'autocomplete')
+        ) {
             $dbData = $this->container->getParameter('shopware.db');
             $sql = "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ?";
             $tables = json_encode(
@@ -33,7 +36,7 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
                 )
             );
             $this->View()->hintOptions = $tables;
-            $this->View()->autocompleteActive = $this->container->get('config')->getByNamespace('WbmQueryManager', 'autocomplete');
+            $this->View()->autocompleteActive = true;
         }
     }
     
