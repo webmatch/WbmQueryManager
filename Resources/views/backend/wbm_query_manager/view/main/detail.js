@@ -220,39 +220,92 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                             var result = Ext.JSON.decode(response.responseText);
 
                             if(result.success){
-                                if(result.fetchData){
-                                    Ext.MessageBox.show({
-                                        title:'{s name="queryResult"}Query Resultat{/s}',
-                                        msg: '{s name="showOrDownload"}Resultat anzeigen oder als CSV downloaden?{/s}',
-                                        buttons: Ext.MessageBox.YESNO,
-                                        buttonText: {
-                                            yes: '{s name="show"}Anzeigen{/s}', no: '{s name="download"}Downloaden{/s}', cancel: '{s name="cancel"}Abbrechen{/s}'
-                                        },
-                                        fn: function(btn, text){
-                                            if (btn == 'yes'){
-                                                Ext.create('Shopware.apps.WbmQueryManager.view.result.Window', {
-                                                   jsonData: result.fetchData
-                                                });
-                                            }
-                                            if (btn == 'no'){   
-                                                var form = Ext.create('Ext.form.Panel', {
-                                                    standardSubmit: true,
-                                                    url: '{url controller="WbmQueryManager" action="run" download=1}',
-                                                    method: 'POST'
-                                                });    
-                                                
-                                                form.submit({
-                                                    target: '_blank', // Avoids leaving the page. 
-                                                    params: {
-                                                        query: query
+                                Ext.each(result.data, function(rowset) {
+                                    if(rowset.fetchData){
+                                        Ext.create('Ext.window.Window', {
+                                            width: 500,
+                                            height: 120,
+                                            autoDestroy: true,
+                                            title:'{s name="queryResult"}Query Resultat{/s}',
+                                            layout: 'fit',
+                                            buttonAlign: 'center',
+                                            padding: 10,
+                                            items: [
+                                                {
+                                                    xtype: 'container',
+                                                    html: '{s name="showOrDownload"}Resultat anzeigen oder als CSV downloaden?{/s}'
+                                                }
+                                            ],
+                                            buttons: [
+                                                {
+                                                    text: '{s name="show"}Anzeigen{/s}',
+                                                    cls: 'primary',
+                                                    listeners: {
+                                                        click: {
+                                                            fn: function (item, e) {
+                                                                this.up('window').close();
+                                                                Ext.create('Shopware.apps.WbmQueryManager.view.result.Window', {
+                                                                    jsonData: rowset.fetchData
+                                                                });
+                                                            }
+                                                        }
                                                     }
-                                                });
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Ext.MessageBox.alert('{s name="querySuccess"}Query erfolgreich{/s}', result.data + ' {s name="rowsAffected"}Reihen betroffen{/s}');
-                                }
+                                                },
+                                                {
+                                                    text: '{s name="download"}Downloaden{/s}',
+                                                    cls: 'primary',
+                                                    listeners: {
+                                                        click: {
+                                                            fn: function (item, e) {
+                                                                this.up('window').close();
+                                                                var form = Ext.create('Ext.form.Panel', {
+                                                                    standardSubmit: true,
+                                                                    url: '{url controller="WbmQueryManager" action="run" download=1}',
+                                                                    method: 'POST'
+                                                                });
+
+                                                                form.submit({
+                                                                    target: '_blank', // Avoids leaving the page.
+                                                                    params: {
+                                                                        query: query,
+                                                                        rowset: rowset.rowsetKey
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    text: '{s name="cancel"}Abbrechen{/s}',
+                                                    cls: 'secondary',
+                                                    listeners: {
+                                                        click: {
+                                                            fn: function (item, e) {
+                                                                this.up('window').close();
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }).show();
+                                    } else {
+                                        Ext.create('Ext.window.Window', {
+                                            width: 300,
+                                            height: 120,
+                                            autoDestroy: true,
+                                            title:'{s name="querySuccess"}Query erfolgreich{/s}',
+                                            layout: 'fit',
+                                            buttonAlign: 'center',
+                                            padding: 10,
+                                            items: [
+                                                {
+                                                    xtype: 'container',
+                                                    html: rowset.rowCount + ' {s name="rowsAffected"}Reihen betroffen{/s}'
+                                                }
+                                            ]
+                                        }).show();
+                                    }
+                                });
                             } else {
                                 Ext.MessageBox.alert('{s name="queryError"}Query fehlerhaft{/s}', result.data);
                             }

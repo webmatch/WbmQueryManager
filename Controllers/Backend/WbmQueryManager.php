@@ -153,52 +153,69 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
     {
         $sql = $this->Request()->get('query');
         $download = $this->Request()->get('download');
+        $rowsetKey = $this->Request()->get('rowset');
         
         try {
-            /** @var \Zend_Db_Statement_Pdo $query */
-            $query = $this->container->get('shopware.db')->query($sql);
+            /** @var \mysqli|\Zend_Db_Statement_Pdo $query */
+            $query = $this->container->get('wbm_query_manager.db')->query($sql);
+            $data = array();
+            $i = 0;
 
-            $data = $query->rowCount();
-            
-            if($data && $query->columnCount()){
-                $records = $query->fetchAll();
-                $recordFields = array_keys($records[0]);
-                $columns = array();
-                foreach($recordFields as $recordField){
-                    $columns[] = array(
-                        'header' => $recordField,
-                        'dataIndex' => $recordField,
-                        'flex' => 1
-                    );
-                }
+            do {
+                $data[$i]['rowsetKey'] = $i;
 
-                $fetchData = array(
-                    'records' => $records,
-                    'recordFields' => $recordFields,
-                    'columns' => $columns
-                );
-                
-                if($download){
-                    $this->container->get('plugins')->Controller()->ViewRenderer()->setNoRender();
-                    $now = new \DateTime();
-                    $file = "query_" . $now->format('Y_m_d_h_i_s') . ".csv";
-                    header("Content-Type: text/csv");
-                    header("Content-Disposition: attachment; filename=\"$file\"");
+                if($this->container->get('wbm_query_manager.db')->getColumnCount($query)){
+                    $records = $this->container->get('wbm_query_manager.db')->fetchAll($query);
+                    $data[$i]['rowCount'] = $this->container->get('wbm_query_manager.db')->getRowCount($query);
 
-                    $outputBuffer = fopen("php://output", 'w');
-                    foreach(array_merge(array(0 => $recordFields),$records) as $val) {
-                        fputcsv($outputBuffer, $val, $this->container->get('config')->getByNamespace('WbmQueryManager', 'csv_field_separator'));
+                    if($download && $rowsetKey != $i){
+                        $i++;
+                        continue;
                     }
-                    fclose($outputBuffer);
 
-                    exit();
+                    $recordFields = array_keys($records[0]);
+                    $columns = array();
+                    foreach($recordFields as $recordField){
+                        $columns[] = array(
+                            'header' => $recordField,
+                            'dataIndex' => $recordField,
+                            'flex' => 1
+                        );
+                    }
+
+                    $data[$i]['fetchData'] = array(
+                        'records' => $records,
+                        'recordFields' => $recordFields,
+                        'columns' => $columns
+                    );
+
+                    if($download){
+                        $this->container->get('plugins')->Controller()->ViewRenderer()->setNoRender();
+                        $now = new \DateTime();
+                        $file = "query_" . $now->format('Y_m_d_h_i_s') . ".csv";
+                        header("Content-Type: text/csv");
+                        header("Content-Disposition: attachment; filename=\"$file\"");
+
+                        $outputBuffer = fopen("php://output", 'w');
+                        foreach(array_merge(array(0 => $recordFields),$records) as $val) {
+                            fputcsv($outputBuffer, $val, $this->container->get('config')->getByNamespace('WbmQueryManager', 'csv_field_separator'));
+                        }
+                        fclose($outputBuffer);
+
+                        exit();
+                    }
+                } else {
+                    $data[$i]['rowCount'] = $this->container->get('wbm_query_manager.db')->getRowCount($query);
+                    $data[$i]['fetchData'] = null;
                 }
-            } else {
-                $fetchData = null;
-            }
-        
+
+                $i++;
+            } while ($this->container->get('wbm_query_manager.db')->nextResult($query));
+
+            $this->container->get('wbm_query_manager.db')->close($query);
+
             $this->View()->assign(
-                array('success' => true, 'data' => $data, 'fetchData' => $fetchData)
+                array('success' => true, 'data' => array_reverse($data))
             );
         } catch (Exception $e) {
             $this->View()->assign(

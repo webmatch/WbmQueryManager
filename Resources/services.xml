@@ -19,5 +19,10 @@
             <argument type="service" id="service_container" />
             <tag name="shopware.event_subscriber" />
         </service>
+
+        <service id="wbm_query_manager.db" class="WbmQueryManager\Services\QueryManagerDb">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="shopware.db" />
+        </service>
     </services>
 </container>

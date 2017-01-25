@@ -77,49 +77,60 @@ class QueryManagerCron implements SubscriberInterface
         $clearCacheAfter = false;
 
         foreach($cronJobs as $cronJob){
+            $i = 0;
+            $numRows = 0;
             try {
-                /** @var \Zend_Db_Statement_Pdo $query */
-                $query = $this->container->get('shopware.db')->query($cronJob['sqlString']);
+                /** @var \mysqli|\Zend_Db_Statement_Pdo $query */
+                $query = $this->container->get('wbm_query_manager.db')->query($cronJob['sqlString']);
+                if($query instanceof \Zend_Db_Statement_Pdo) {
+                    $query->closeCursor();
+                }
 
-                $data = $query->rowCount();
                 /** @var \Enlight_Components_Snippet_Namespace $snippets */
                 $snippets = $this->container->get('snippets')->getNamespace("backend/plugins/wbm/querymanager");
 
-                if($data && $query->columnCount()){
-                    $records = $query->fetchAll();
-                    $recordFields = array_keys($records[0]);
+                do {
+                    if($this->container->get('wbm_query_manager.db')->getColumnCount($query)){
+                        $records = $this->container->get('wbm_query_manager.db')->fetchAll($query);
+                        $numRows += $this->container->get('wbm_query_manager.db')->getRowCount($query);
+                        $recordFields = array_keys($records[0]);
 
-                    $date = new \DateTime();
+                        $date = new \DateTime();
 
-                    $file = preg_replace("/[^a-z0-9\.]/", "", strtolower($cronJob['name'])) . "_" . $date->format('Y_m_d_h_i_s') . ".csv";
+                        $file = preg_replace("/[^a-z0-9\.]/", "", strtolower($cronJob['name'])) . "_" . $date->format('Y_m_d_h_i_s') . '_' . $i++ . ".csv";
 
-                    $csvPath = $this->container->get('application')->DocPath() . 'var/log/' . $file;
+                        $csvPath = $this->container->get('application')->DocPath() . 'var/log/' . $file;
 
-                    $outputBuffer = fopen($csvPath, 'w');
-                    foreach(array_merge(array(0 => $recordFields),$records) as $val) {
-                        fputcsv($outputBuffer, $val, $this->container->get('config')->getByNamespace('WbmQueryManager', 'csv_field_separator'));
+                        $outputBuffer = fopen($csvPath, 'w');
+                        foreach(array_merge(array(0 => $recordFields),$records) as $val) {
+                            fputcsv($outputBuffer, $val, $this->container->get('config')->getByNamespace('WbmQueryManager', 'csv_field_separator'));
+                        }
+                        fclose($outputBuffer);
+
+                        $mailRecipient = $this->container->get('config')->getByNamespace('WbmQueryManager', 'mail_address_receiver');
+                        if(!empty($mailRecipient)){
+                            $mail = clone $this->container->get('mail');
+                            $mail->setFrom($this->container->get('config')->get('mail'));
+                            $mail->addTo($mailRecipient);
+                            $mail->setSubject($cronJob['name']);
+                            $mail->setBodyText($numRows . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen'));
+                            $mail->createAttachment(
+                                fopen($csvPath, 'r'),
+                                'application/pdf',
+                                \Zend_Mime::DISPOSITION_ATTACHMENT,
+                                \Zend_Mime::ENCODING_BASE64,
+                                $file
+                            );
+                            $mail->send();
+                        }
+                    } else {
+                        $numRows += $this->container->get('wbm_query_manager.db')->getRowCount($query);
                     }
-                    fclose($outputBuffer);
+                } while ($this->container->get('wbm_query_manager.db')->nextResult($query));
 
-                    $mailRecipient = $this->container->get('config')->getByNamespace('WbmQueryManager', 'mail_address_receiver');
-                    if(!empty($mailRecipient)){
-                        $mail = clone $this->container->get('mail');
-                        $mail->setFrom($this->container->get('config')->get('mail'));
-                        $mail->addTo($mailRecipient);
-                        $mail->setSubject($cronJob['name']);
-                        $mail->setBodyText($data . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen'));
-                        $mail->createAttachment(
-                            fopen($csvPath, 'r'),
-                            'application/pdf',
-                            \Zend_Mime::DISPOSITION_ATTACHMENT,
-                            \Zend_Mime::ENCODING_BASE64,
-                            $file
-                        );
-                        $mail->send();
-                    }
-                }
+                $this->container->get('wbm_query_manager.db')->close($query);
 
-                $result = $data . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen');
+                $result = $numRows . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen');
             } catch (\Exception $e) {
                 $result = $e->getMessage();
             }
