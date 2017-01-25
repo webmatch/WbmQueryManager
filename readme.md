@@ -17,6 +17,11 @@ Requirements
 -----
 * Shopware >= 5.2.0
 
+**Optional:**
+
+* MySQL Improved Extension (MySQLi)
+  * enables the fetching of more than one rowsets per query by multiple statements (*multi_query*)
+
 Installation
 ====
 Clone this repository into a folder **WbmQueryManager** within the **custom/plugins** directory of the Shopware installation.
