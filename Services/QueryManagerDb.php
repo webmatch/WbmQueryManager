@@ -66,7 +66,7 @@ class QueryManagerDb {
     public function query($query)
     {
         $connection = $this->getConnection();
-        if($connection instanceof \mysqli){
+        if(get_class($connection) == 'mysqli'){
             if($connection->multi_query($query)){
                 return $connection;
             }
