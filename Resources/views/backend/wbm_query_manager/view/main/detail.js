@@ -229,10 +229,10 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                                             title:'{s name="queryResult"}Query Resultat{/s}',
                                             layout: 'fit',
                                             buttonAlign: 'center',
-                                            padding: 10,
                                             items: [
                                                 {
                                                     xtype: 'container',
+                                                    padding: 10,
                                                     html: '{s name="showOrDownload"}Resultat anzeigen oder als CSV downloaden?{/s}'
                                                 }
                                             ],
@@ -296,11 +296,24 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                                             title:'{s name="querySuccess"}Query erfolgreich{/s}',
                                             layout: 'fit',
                                             buttonAlign: 'center',
-                                            padding: 10,
                                             items: [
                                                 {
                                                     xtype: 'container',
+                                                    padding: 10,
                                                     html: rowset.rowCount + ' {s name="rowsAffected"}Reihen betroffen{/s}'
+                                                }
+                                            ],
+                                            buttons: [
+                                                {
+                                                    text: '{s name="ok"}OK{/s}',
+                                                    cls: 'primary',
+                                                    listeners: {
+                                                        click: {
+                                                            fn: function (item, e) {
+                                                                this.up('window').close();
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             ]
                                         }).show();
