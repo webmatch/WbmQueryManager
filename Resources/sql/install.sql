@@ -18,4 +18,4 @@ INSERT IGNORE INTO `wbm_query_manager` (`id`, `name`, `sql_string`, `has_cronjob
   (4, 'Vorkasse-Bestellungen stornieren', '/* \nFrist in Tagen \n*/\n\nSET @deadline=20;\n\n/* \nVorkasse-Bestellungen mit Zahlungsstatus "Offen"\nwerden nach Ablauf der Frist auf den Bestellstatus\n"Storniert / Abgelehnt" gesetzt.\n*/\n\nUPDATE `s_order` \nSET `status` = 4\nWHERE `cleared` = 17 \nAND `ordertime` < (NOW() - INTERVAL @deadline DAY) \nAND `paymentID` = 5;', 0, NULL, NULL, 0, '', 0);
 
 INSERT IGNORE INTO `s_crontab` (`name`, `action`, `elementID`, `data`, `next`, `start`, `interval`, `active`, `disable_on_error`, `end`, `inform_template`, `inform_mail`, `pluginID`) VALUES
-  ('Query Manager', 'WbmQueryManagerCron', NULL, '', NOW(), NULL, 1, 1, 1, NOW(), '', '', null);
+  ('Query Manager', 'Shopware_CronJob_WbmQueryManagerCron', NULL, '', NOW(), NULL, 1, 1, 1, NOW(), '', '', null);
