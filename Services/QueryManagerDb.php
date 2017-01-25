@@ -80,7 +80,7 @@ class QueryManagerDb {
      */
     public function getRowCount($query)
     {
-        if($query instanceof \mysqli){
+        if(get_class($query) == 'mysqli'){
             return $query->affected_rows;
         }
         return $query->rowCount();
@@ -92,7 +92,7 @@ class QueryManagerDb {
      */
     public function getColumnCount($query)
     {
-        if($query instanceof \mysqli){
+        if(get_class($query) == 'mysqli'){
             return $query->field_count;
         }
         return $query->columnCount();
@@ -104,7 +104,7 @@ class QueryManagerDb {
      */
     public function fetchAll($query)
     {
-        if($query instanceof \mysqli){
+        if(get_class($query) == 'mysqli'){
             $results = array();
             if ($result = $query->store_result()) {
                 $results = $result->fetch_all(MYSQLI_ASSOC);
@@ -120,7 +120,7 @@ class QueryManagerDb {
      */
     public function nextResult($query)
     {
-        if($query instanceof \mysqli){
+        if(get_class($query) == 'mysqli'){
             return $query->next_result();
         }
         return false;
@@ -132,7 +132,7 @@ class QueryManagerDb {
      */
     public function close($query)
     {
-        if($query instanceof \mysqli){
+        if(get_class($query) == 'mysqli'){
             return $query->close();
         } else {
             $query->closeCursor();
