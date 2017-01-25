@@ -67,6 +67,6 @@ class PostDispatch implements SubscriberInterface
             $this->container->getParameter('wbm_query_manager.plugin_dir')
         );
 
-        $view->extendsTemplate('base/hint-scripts.tpl');
+        $view->extendsTemplate('base/resources.tpl');
     }
 }

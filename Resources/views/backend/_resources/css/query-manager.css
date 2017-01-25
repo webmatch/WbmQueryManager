@@ -34,3 +34,7 @@ li.CodeMirror-hint-active {
   background: #08f;
   color: white;
 }
+
+.x-panel.query-manager-results .x-grid-view {
+  overflow-x: auto !important;
+}

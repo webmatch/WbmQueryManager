@@ -17,6 +17,7 @@ Ext.define('Shopware.apps.WbmQueryManager.view.result.List', {
     extend:'Ext.grid.Panel',
     border: false,
     alias:'widget.query-manager-result-list',
+    cls:'query-manager-results',
     region:'center',
     autoScroll:true,
     initComponent:function () {

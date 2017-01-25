@@ -1,5 +1,5 @@
 {block name="backend/base/header/css" append}
-    <link rel="stylesheet" type="text/css" href="{link file=$queryManagerPath|cat:'/Resources/views/backend/_resources/css/show-hint.css'}" />
+    <link rel="stylesheet" type="text/css" href="{link file=$queryManagerPath|cat:'/Resources/views/backend/_resources/css/query-manager.css'}" />
 {/block}
 
 {block name="backend/base/header/javascript" append}
