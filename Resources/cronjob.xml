@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cronjobs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/cronjob.xsd">
+    <cronjob>
+        <name>Query Manager</name>
+        <action>Shopware_CronJob_WbmQueryManagerCron</action>
+        <active>true</active>
+        <interval>1</interval>
+        <disableOnError>false</disableOnError>
+    </cronjob>
+</cronjobs>
