@@ -106,8 +106,10 @@ class QueryManagerDb {
     {
         if(get_class($query) == 'mysqli'){
             $results = array();
-            if ($result = $query->store_result()) {
-                $results = $result->fetch_all(MYSQLI_ASSOC);
+            if($result = $query->store_result()){
+                while($row = $result->fetch_assoc()){
+                    $results[] = $row;
+                }
             }
             return $results;
         }
