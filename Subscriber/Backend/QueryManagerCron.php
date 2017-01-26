@@ -92,7 +92,7 @@ class QueryManagerCron implements SubscriberInterface
                 do {
                     if($this->container->get('wbm_query_manager.db')->getColumnCount($query)){
                         $records = $this->container->get('wbm_query_manager.db')->fetchAll($query);
-                        $numRows += $this->container->get('wbm_query_manager.db')->getRowCount($query);
+                        $rowCount = $this->container->get('wbm_query_manager.db')->getRowCount($query);
                         $recordFields = array_keys($records[0]);
 
                         $date = new \DateTime();
@@ -113,7 +113,7 @@ class QueryManagerCron implements SubscriberInterface
                             $mail->setFrom($this->container->get('config')->get('mail'));
                             $mail->addTo($mailRecipient);
                             $mail->setSubject($cronJob['name']);
-                            $mail->setBodyText($numRows . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen'));
+                            $mail->setBodyText($rowCount . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen'));
                             $mail->createAttachment(
                                 fopen($csvPath, 'r'),
                                 'application/pdf',
@@ -123,6 +123,12 @@ class QueryManagerCron implements SubscriberInterface
                             );
                             $mail->send();
                         }
+
+                        if(!$this->container->get('config')->getByNamespace('WbmQueryManager', 'log_csv')){
+                            unlink($csvPath);
+                        }
+
+                        $numRows += $rowCount;
                     } else {
                         $numRows += $this->container->get('wbm_query_manager.db')->getRowCount($query);
                     }

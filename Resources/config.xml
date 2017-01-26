@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../engine/Shopware/Components/Plugin/schema/config.xsd">
     <elements>
+        <element type="boolean">
+            <name>log_csv</name>
+            <label lang="de">Reihen als CSV loggen</label>
+            <label lang="en">Log Rows as SCV</label>
+            <value>true</value>
+        </element>
         <element type="text">
             <name>mail_address_receiver</name>
             <label lang="de">CSV Exporte an E-Mail Adresse versenden</label>
