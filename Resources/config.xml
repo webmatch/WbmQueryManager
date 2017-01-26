@@ -4,7 +4,7 @@
         <element type="boolean">
             <name>log_csv</name>
             <label lang="de">Reihen als CSV loggen</label>
-            <label lang="en">Log Rows as SCV</label>
+            <label lang="en">Log Rows as CSV</label>
             <value>true</value>
         </element>
         <element type="text">
