@@ -46,17 +46,20 @@ class QueryManagerDb {
     }
 
     /**
+     * @param $query
      * @return \Enlight_Components_Db_Adapter_Pdo_Mysql|\mysqli
      */
-    private function getConnection()
+    private function getConnection($query)
     {
         if(function_exists('mysqli_connect') && class_exists('Zend_Db_Adapter_Mysqli')) {
             $config = $this->container->getParameter('shopware.db');
             $mysqli = new \Zend_Db_Adapter_Mysqli($config);
-            return $mysqli->getConnection();
-        } else {
-            return $this->db;
+            $connection = $mysqli->getConnection();
+            if($connection->multi_query($query)){
+                return $connection;
+            }
         }
+        return $this->db;
     }
 
     /**
@@ -65,11 +68,9 @@ class QueryManagerDb {
      */
     public function query($query)
     {
-        $connection = $this->getConnection();
+        $connection = $this->getConnection($query);
         if(get_class($connection) == 'mysqli'){
-            if($connection->multi_query($query)){
-                return $connection;
-            }
+            return $connection;
         }
         return $connection->query($query);
     }

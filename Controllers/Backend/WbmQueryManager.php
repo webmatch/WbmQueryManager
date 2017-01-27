@@ -89,7 +89,7 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
         $this->View()->assign(
             array(
                 'success' => true,
-                'id' => $this->container->get('dbal_connection')->lastInsertId()
+                'id' => $query->getId()
             )
         );
     }
