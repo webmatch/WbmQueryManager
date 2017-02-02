@@ -2,6 +2,8 @@ WbmQueryManager - Database-Management plugin for Shopware
 =====
 This plugin integrates a new module within the [Shopware](https://www.shopware.de) backend that allows for a simple management of SQL queries and their manual or automated execution.
 
+![WbmQueryManager](https://www.webmatch.de/wp-content/uploads/2017/02/query_manager_screen.png)
+
 The plugin offers the following features:
 
 * Write, edit, delete, duplicate and run queries
