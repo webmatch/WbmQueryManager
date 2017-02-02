@@ -60,6 +60,11 @@ class WbmQueryManager extends \Shopware\Components\Plugin
      */
     public function update(UpdateContext $context)
     {
-        parent::update($context);
+        if(version_compare($context->getCurrentVersion(), '2.0.0', '<')) {
+            $sql = "ALTER TABLE `wbm_query_manager` CHANGE `interval` `interval_int` INT(11) NULL DEFAULT '0';
+                    ALTER TABLE `wbm_query_manager` CHANGE `sql` `sql_string` LONGTEXT NOT NULL;";
+
+            $this->container->get('shopware.db')->query($sql);
+        }
     }
 }
