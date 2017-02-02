@@ -19,7 +19,6 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Window', {
     extend: 'Enlight.app.Window',
     title: '{s name="pluginTitle"}Query Manager{/s}',
     alias: 'widget.query-manager-window',
-    id: 'WbmQueryManagerWindow',
     border: false,
     autoShow: true,
     height: 620,
