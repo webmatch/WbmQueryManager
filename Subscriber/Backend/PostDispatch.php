@@ -61,12 +61,6 @@ class PostDispatch implements SubscriberInterface
             $this->container->getParameter('wbm_query_manager.plugin_dir') . '/Resources/views/backend/'
         );
 
-        $view->queryManagerPath = str_replace(
-            $this->container->get('application')->DocPath(),
-            '',
-            $this->container->getParameter('wbm_query_manager.plugin_dir')
-        );
-
         $view->extendsTemplate('base/resources.tpl');
     }
 }
