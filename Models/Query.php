@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopware\Components\Model\ModelEntity;
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Repository")
  * @ORM\Table(name="wbm_query_manager")
  */
 class Query extends ModelEntity
