@@ -17,7 +17,7 @@
 namespace WbmQueryManager\Services;
 
 /**
- * Class QueryManagerDbInterface
+ * Interface QueryManagerDbInterface
  * @package WbmQueryManager\Services
  */
 interface QueryManagerDbInterface {
