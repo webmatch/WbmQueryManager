@@ -22,7 +22,7 @@ use Shopware\Components\DependencyInjection\Container;
  * Class QueryManagerDb
  * @package WbmQueryManager\Services
  */
-class QueryManagerDb {
+class QueryManagerDb implements QueryManagerDbInterface {
 
     /**
      * @var Container
