@@ -1,5 +1,5 @@
 {
-  "name": "webmatch/WbmQueryManager",
+  "name": "webmatch/wbm-query-manager",
   "keywords": ["database", "query", "shopware", "shopware-plugin"],
   "description": "Database-Management plugin for Shopware",
   "license": "GPL3",
