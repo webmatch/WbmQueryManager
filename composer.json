@@ -1,0 +1,13 @@
+{
+  "name": "webmatch/WbmQueryManager",
+  "keywords": ["database", "query", "shopware", "shopware-plugin"],
+  "description": "Database-Management plugin for Shopware",
+  "license": "GPL3",
+  "type": "shopware-plugin",
+  "extra": {
+    "installer-name": "WbmQueryManager"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
