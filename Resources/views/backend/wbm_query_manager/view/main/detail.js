@@ -64,17 +64,20 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                 tables: Ext.decode('{$hintOptions}')
             });
             var hintDelay = null;
-            editor.on("keyup", function (cm, event) {
-                if ([13,32,37,38,39,40].indexOf(event.keyCode) === -1) {
-                    clearTimeout(hintDelay);
-                    if(cm.state.completionActive){
-                        cm.state.completionActive.close();
-                    }
-                    hintDelay = setTimeout(function() {
-                        CodeMirror.commands.autocomplete(cm, null, { completeSingle: false });
-                    }, 1500);
-                } else {
-                    clearTimeout(hintDelay);
+            editor.on("keyup", function (instance, event) {
+                if (instance.state.completionActive) {
+                    return;
+                }
+                var cur = instance.getCursor(),
+                    token = instance.getTokenAt(cur),
+                    string = '';
+                if (token.string.match(/^[.`\w@]\w*$/)) {
+                    string = token.string;
+                }
+                if (string.length > 0) {
+                    CodeMirror.commands.autocomplete(instance, null, {
+                        completeSingle: false
+                    });
                 }
             });
             //{/if}
