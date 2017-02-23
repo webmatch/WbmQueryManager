@@ -31,6 +31,11 @@ Clone this repository into a folder **WbmQueryManager** within the **custom/plug
 Install the plugin through the Plugin-Manager within the Shopware backend. Activate the plugin and when prompted allow for the clearing of the listed caches.
 Reload the backend to complete the installation.
 
+
+## Install with composer
+* Change to your root Installation of shopware
+* Run command `composer require webmatch/wbm-query-manager` and install and active plugin with Plugin Manager 
+
 Usage
 =====
 The module will be accessible in backend through a new menu point under the Settings menu tab.
