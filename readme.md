@@ -34,7 +34,7 @@ Reload the backend to complete the installation.
 
 ## Install with composer
 * Change to your root Installation of shopware
-* Run command `composer require webmatch/wbm-query-manager` and install and active plugin with Plugin Manager 
+* Run command `composer require webmatch/wbm-query-manager` and install and activate plugin with Plugin Manager 
 
 Usage
 =====
