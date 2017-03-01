@@ -44,7 +44,7 @@ class WbmQueryManager extends \Shopware\Components\Plugin
     {
         $sql = file_get_contents($this->getPath() . '/Resources/sql/install.sql');
 
-        $this->container->get('shopware.db')->query($sql);
+        $this->container->get('shopware.db')->query($sql, array($context->getPlugin()->getId()));
     }
 
     /**
