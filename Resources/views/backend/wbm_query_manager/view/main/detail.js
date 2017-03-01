@@ -18,6 +18,7 @@
 Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
     extend:'Ext.form.Panel',
     alias:'widget.query-manager-detail',
+    cls:'query-manager-detail',
     collapsible : false,
     bodyPadding : 10,
     split       : false,

@@ -66,5 +66,7 @@ class WbmQueryManager extends \Shopware\Components\Plugin
 
             $this->container->get('shopware.db')->query($sql);
         }
+
+        $context->scheduleClearCache(InstallContext::CACHE_LIST_ALL);
     }
 }
