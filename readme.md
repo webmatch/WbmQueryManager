@@ -1,5 +1,6 @@
 WbmQueryManager - Database-Management plugin for Shopware
 =====
+![Scrutinizer](https://scrutinizer-ci.com/g/webmatch/WbmQueryManager/badges/quality-score.png?b=master)
 ![Travis CI](https://travis-ci.org/webmatch/WbmQueryManager.svg?branch=master)
 
 This plugin integrates a new module within the [Shopware](https://www.shopware.de) backend that allows for a simple management of SQL queries and their manual or automated execution.
