@@ -1,55 +1,47 @@
 language: php
-
 php:
-  - 7.0
-  - 7.1
-
+- 7.0
+- 7.1
 sudo: false
-
 services:
-  - mysql
-
+- mysql
 env:
   matrix:
-    - SHOPWARE_VERSION="5.2"
-    - SHOPWARE_VERSION="5.3"
+  - SHOPWARE_VERSION="5.2"
+  - SHOPWARE_VERSION="5.3"
   global:
-    - PLUGIN_NAME=WbmQueryManager
-    - SHOPWARE_DIRECTORY=${HOME}/shopware
-    - PLUGIN_DIRECTORY=${SHOPWARE_DIRECTORY}/custom/plugins
-
+  - PLUGIN_NAME=WbmQueryManager
+  - SHOPWARE_DIRECTORY=${HOME}/shopware
+  - PLUGIN_DIRECTORY=${SHOPWARE_DIRECTORY}/custom/plugins
 cache:
-   directories:
-     - ${HOME}/.composer/cache/files
-
+  directories:
+  - ${HOME}/.composer/cache/files
 install:
-  - composer install
-
+- composer install
 before_script:
-  - if [[ "$(php --version | grep -cim1 xdebug)" -ge 1 ]]; then phpenv config-rm xdebug.ini; fi
-  - git clone https://github.com/shopware/shopware.git ${SHOPWARE_DIRECTORY} --branch ${SHOPWARE_VERSION}
-  - ant -f ${SHOPWARE_DIRECTORY}/build/build.xml -Dapp.host=localhost -Ddb.user=travis -Ddb.host=127.0.0.1 -Ddb.name=shopware build-unit
-  - mv ${TRAVIS_BUILD_DIR} ${PLUGIN_DIRECTORY}/${PLUGIN_NAME}
-  - php ${HOME}/shopware/bin/console sw:plugin:refresh
-  - php ${HOME}/shopware/bin/console sw:plugin:install ${PLUGIN_NAME}
-  - php ${HOME}/shopware/bin/console sw:plugin:activate ${PLUGIN_NAME}
-  - cd ${PLUGIN_DIRECTORY}/${PLUGIN_NAME}
-
+- if [[ "$(php --version | grep -cim1 xdebug)" -ge 1 ]]; then phpenv config-rm xdebug.ini;
+  fi
+- git clone https://github.com/shopware/shopware.git ${SHOPWARE_DIRECTORY} --branch
+  ${SHOPWARE_VERSION}
+- ant -f ${SHOPWARE_DIRECTORY}/build/build.xml -Dapp.host=localhost -Ddb.user=travis
+  -Ddb.host=127.0.0.1 -Ddb.name=shopware build-unit
+- mv ${TRAVIS_BUILD_DIR} ${PLUGIN_DIRECTORY}/${PLUGIN_NAME}
+- php ${HOME}/shopware/bin/console sw:plugin:refresh
+- php ${HOME}/shopware/bin/console sw:plugin:install ${PLUGIN_NAME}
+- php ${HOME}/shopware/bin/console sw:plugin:activate ${PLUGIN_NAME}
+- cd ${PLUGIN_DIRECTORY}/${PLUGIN_NAME}
 script:
-  - composer test
-
+- composer test
 after_success:
-  - ./build.sh
-
+- ./build.sh
 matrix:
   allow_failures:
   - env: SHOPWARE_VERSION="5.3"
   - php: nightly
-
 deploy:
   provider: releases
-  api_key: ac8b73b39d69645fc5e58e63e4433d5150418530
-  file_glob: true
+  api_key:
+    secure: QJX2JbIu4XczmVxPzfxd0PIAfvgSLKX9o7ahjuUFFc9UBUzU1ZIFkz2+jzRsD69WFxoT1PslKbMRNJua1q0NJ0IWHl159Y+jUjqPol2KgAXXz8QJLF6D4sm7BH+BXOhbVHgtzEyrN2RF/7xdqnvZoiJVzUWy56qVo62Fan5PUq/5A04RI4vZQyksAeElT/VGKNEWI+vKKB4Va19BpQ3x9nJqJ8MR1xF7f7BYbwGcl2zkuBMiUN+sQwf7VtNS7r793kMlezyDxUyaTLjNMSNgCm6y3hHJmA8PaU+TthOKB6pbIlg2OllSoQ63tviAJNF4SawB6PSAhjp+tD3Kd3YblMRQMAAWLxNi5GxbBJLTv8JLJclW+jYTE3341WnX68MS3v+uxWzBHmWXoO62h91nv9wsJC/iiGLp+lwrgCnbpqX2xxC32QSS1nsg2rRUxOBgUGyURoCgGxN67zaXAqUaygyyhbLWdhuMIpseKgfvU7fB/4BAylzGQsiaXcdhEgTCX2d55v7bjf71Kf3CcK/alaovEqmtGjLJvPCdCnmjGEmZp/FBxTKHkld1t3Nd7y7lbZ/pRkTmRtY0o+b85OrV9pWrJ5tAEUdoBk9HpfpuTVS6cmSkKr+P9Ze5qNYBlvnisql1Vt6sWR5TTiZrPjU7upljKl7rlMrglUnwVulsSEA=
   file: WbmQueryManager*.zip
   on:
-    tags: true
+    repo: webmatch/WbmQueryManager
