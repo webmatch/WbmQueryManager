@@ -3,12 +3,12 @@
     <label lang="de">Query Manager</label>
     <label lang="en">Query Manager</label>
 
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <link>http://www.webmatch.de</link>
     <author>Webmatch GmbH</author>
     <compatibility minVersion="5.2.0" />
 
-    <changelog version="2.0.0">
+    <changelog version="2.0.1">
         <changes lang="de">Veröffentlichung Open-Source</changes>
         <changes lang="en">Release Open-Source</changes>
     </changelog>

@@ -48,12 +48,19 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.List', {
         return true;
     },
     getColumns:function () {
-        var me = this,
-        columnsData = [
+        var me = this;
+        return [
             {
                 header: '{s name="nameColumnHeader"}Name{/s}',
                 dataIndex:'name',
                 flex:1
+            },
+            {
+                header: 'C',
+                width:25,
+                dataIndex: 'hasCronjob',
+                xtype: 'booleancolumn',
+                renderer: me.activeColumnRenderer
             },
             {
                 xtype:'actioncolumn',
@@ -61,23 +68,22 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.List', {
                 items:me.getActionColumnItems()
             }
         ];
-        return columnsData;
     },
     getButtons : function()
     {
         var me = this;
-            return [
-                {
-                    text    : '{s name="add"}Hinzufügen{/s}',
-                    scope   : me,
-                    iconCls : 'sprite-plus-circle-frame',
-                    action : 'addQuery'
-                }
-            ];
+        return [
+            {
+                text    : '{s name="add"}Hinzufügen{/s}',
+                scope   : me,
+                iconCls : 'sprite-plus-circle-frame',
+                action : 'addQuery'
+            }
+        ];
     },
     getActionColumnItems: function () {
-        var me = this,
-        actionColumnData = [
+        var me = this;
+        return [
             {
                 iconCls:'x-action-col-icon sprite-minus-circle-frame',
                 cls:'duplicateColumn',
@@ -104,7 +110,13 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.List', {
                     me.fireEvent('cloneQuery', view, rowIndex, colIndex, item);
                 }
             }
-        ];       
-        return actionColumnData;
+        ];
+    },
+    activeColumnRenderer: function(value) {
+        if (value) {
+            return '<div class="sprite-tick-small">&nbsp;</div>';
+        } else {
+            return '<div class="sprite-cross-small">&nbsp;</div>';
+        }
     }
 });

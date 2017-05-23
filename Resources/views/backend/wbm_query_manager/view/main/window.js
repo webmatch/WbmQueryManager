@@ -28,19 +28,18 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Window', {
         var me = this;
         me.items = [
             Ext.create('Ext.panel.Panel', {
-                layout: {
-                    type: 'hbox',
-                    pack: 'start',
-                    align: 'stretch'
-                },
+                layout: 'border',
                 flex: 1,
                 items: [
                     {
+                        region: 'west',
                         xtype: 'query-manager-list',
                         store: me.mainStore,
+                        split: true,
                         width: 200
                     },
                     {
+                        region: 'center',
                         xtype: 'query-manager-detail',
                         record: me.record,
                         flex: 1

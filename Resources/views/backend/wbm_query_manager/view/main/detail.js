@@ -25,6 +25,11 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
     region      : 'center',
     defaultType : 'textfield',
     autoScroll  : true,
+    layout      : {
+        type: 'vbox',
+        align : 'stretch',
+        pack  : 'start'
+    },
     items : [],
     initComponent: function() {
         var me = this;
@@ -52,7 +57,7 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
             labelAlign: 'top',
             anchor: '100%',
             name: 'sqlString',
-            height: 328,
+            flex: 1,
             allowBlank: true
         });
         
@@ -83,6 +88,10 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
             });
             //{/if}
             //
+        });
+
+        me.on('resize', function(cmp, width, height) {
+            me.resizeEditor(cmp, cmp.editorField, width, height);
         });
         
         me.items = me.getItems();
@@ -333,5 +342,19 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                 }
             }
         ];
+    },
+    resizeEditor : function(cmp, editorField, width, height) {
+        var editor = editorField.editor;
+
+        if(!editor || !editor.hasOwnProperty('display')) {
+            return false;
+        }
+
+        editor.setSize(0, 0);
+
+        width = editorField.getEl().down('tbody').getWidth();
+        height = editorField.getEl().down('tbody').getHeight() - 20;
+
+        editor.setSize(width, height);
     }
 });
