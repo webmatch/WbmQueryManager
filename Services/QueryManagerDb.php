@@ -18,6 +18,13 @@ namespace WbmQueryManager\Services;
 
 use Shopware\Components\DependencyInjection\Container;
 
+if (version_compare(\Shopware::VERSION, '5.3', '>=')) {
+    require_once __DIR__ . '/../Library/Zend/Db/Adapter/Mysqli.php';
+    require_once __DIR__ . '/../Library/Zend/Db/Adapter/Mysqli/Exception.php';
+    require_once __DIR__ . '/../Library/Zend/Db/Statement/Mysqli.php';
+    require_once __DIR__ . '/../Library/Zend/Db/Statement/Mysqli/Exception.php';
+}
+
 /**
  * Class QueryManagerDb
  * @package WbmQueryManager\Services

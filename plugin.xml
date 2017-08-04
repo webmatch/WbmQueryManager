@@ -3,10 +3,15 @@
     <label lang="de">Query Manager</label>
     <label lang="en">Query Manager</label>
 
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <link>http://www.webmatch.de</link>
     <author>Webmatch GmbH</author>
     <compatibility minVersion="5.2.0" />
+
+    <changelog version="2.0.2">
+        <changes lang="de">Zend Mysqli Adapter für Shopware 5.3 übernommen</changes>
+        <changes lang="en">Included Zend Mysqli Adapter for Shopware 5.3</changes>
+    </changelog>
 
     <changelog version="2.0.1">
         <changes lang="de">Veröffentlichung Open-Source</changes>
