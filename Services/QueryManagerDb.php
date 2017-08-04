@@ -18,7 +18,7 @@ namespace WbmQueryManager\Services;
 
 use Shopware\Components\DependencyInjection\Container;
 
-if (version_compare(\Shopware::VERSION, '5.3', '>=')) {
+if (!class_exists('Zend_Db_Adapter_Mysqli')) {
     require_once __DIR__ . '/../Library/Zend/Db/Adapter/Mysqli.php';
     require_once __DIR__ . '/../Library/Zend/Db/Adapter/Mysqli/Exception.php';
     require_once __DIR__ . '/../Library/Zend/Db/Statement/Mysqli.php';
@@ -58,7 +58,7 @@ class QueryManagerDb implements QueryManagerDbInterface {
      */
     private function getConnection($query)
     {
-        if(function_exists('mysqli_connect') && class_exists('Zend_Db_Adapter_Mysqli')) {
+        if(function_exists('mysqli_connect')) {
             $config = $this->container->getParameter('shopware.db');
             $mysqli = new \Zend_Db_Adapter_Mysqli($config);
             $connection = $mysqli->getConnection();
