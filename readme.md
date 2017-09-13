@@ -59,7 +59,7 @@ The plugin offers a few basic configuration options:
 Cron-Jobs
 =====
 
-To use the cron-job features of this plugin please first make sure the plugin **Cron** is installed in Plugin Manager.
+To use the cron-job features of this plugin please first make sure the plugin **Cron** is installed in Plugin Manager and the Cron-Job **Query Manager** is activated in the cron job settings.
 
 Shopware Cron-Jobs can be executed via request of the URL (e.g. http://your-shop.tld/backend/cron) or by console command **php bin/console sw:cron:run** (recommended)
 
