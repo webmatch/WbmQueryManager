@@ -67,6 +67,12 @@ class WbmQueryManager extends \Shopware\Components\Plugin
             $this->container->get('shopware.db')->query($sql);
         }
 
+        if(version_compare($context->getCurrentVersion(), '2.0.3', '<')) {
+            $sql = "ALTER TABLE `wbm_query_manager` ADD `mail_recipient` VARCHAR (255) NULL DEFAULT NULL AFTER `last_run`;";
+
+            $this->container->get('shopware.db')->query($sql);
+        }
+
         $context->scheduleClearCache(InstallContext::CACHE_LIST_ALL);
     }
 }

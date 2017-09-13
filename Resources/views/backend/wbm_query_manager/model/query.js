@@ -48,6 +48,11 @@ Ext.define('Shopware.apps.WbmQueryManager.model.Query', {
             useNull: true
         }, 
         {
+            name: 'mailRecipient',
+            type: 'string',
+            useNull: true
+        },
+        {
             name: 'lastLog',
             type: 'string'
         }, 
