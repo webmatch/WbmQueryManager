@@ -65,6 +65,13 @@ class Query extends ModelEntity
     private $lastRun;
 
     /**
+     * @var string $mailRecipient
+     *
+     * @ORM\Column(name="mail_recipient", type="string", nullable=true)
+     */
+    private $mailRecipient;
+
+    /**
      * @var integer
      * @ORM\Column(name="interval_int", type="integer", nullable=true)
      */
@@ -176,6 +183,22 @@ class Query extends ModelEntity
     public function setLastRun($lastRun)
     {
         $this->lastRun = $lastRun;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailRecipient()
+    {
+        return $this->mailRecipient;
+    }
+
+    /**
+     * @param string $mailRecipient
+     */
+    public function setMailRecipient($mailRecipient)
+    {
+        $this->mailRecipient = $mailRecipient;
     }
 
     /**

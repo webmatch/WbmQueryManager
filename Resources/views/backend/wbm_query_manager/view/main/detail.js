@@ -182,6 +182,11 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                         xtype: 'displayfield',
                         columnWidth: .35,
                         renderer: Ext.util.Format.dateRenderer('d.m.Y H:i:s')
+                    },{
+                        fieldLabel: '{s name="mailRecipientFieldLabel"}Abweichende E-Mail-Adresse{/s}',
+                        labelWidth: 180,
+                        columnWidth: 1,
+                        name: 'mailRecipient',
                     }
                 ]
             }

@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `wbm_query_manager` (
   `has_cronjob` BOOLEAN DEFAULT '0',
   `next_run` DATETIME DEFAULT NULL,
   `last_run` DATETIME DEFAULT NULL,
+  `mail_recipient` VARCHAR(255) NULL DEFAULT NULL,
   `interval_int` INT(11) DEFAULT '0',
   `last_log` MEDIUMTEXT DEFAULT NULL,
   `clear_cache` BOOLEAN DEFAULT '0',
