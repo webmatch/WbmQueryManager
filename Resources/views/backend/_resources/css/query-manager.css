@@ -39,6 +39,10 @@ li.CodeMirror-hint-active {
   overflow-x: auto !important;
 }
 
+.x-panel.query-manager-detail .CodeMirror {
+  height: 280px;
+}
+
 .x-panel.query-manager-detail .CodeMirror-scroll {
   height: 100% !important;
 }
