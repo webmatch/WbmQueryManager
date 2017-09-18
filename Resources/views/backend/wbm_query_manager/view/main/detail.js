@@ -153,7 +153,8 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
                                 { value:28800, description:"{s name='28800secDesc'}12 Stunden (28800 Sek.){/s}" },
                                 { value:86400, description:"{s name='86400secDesc'}1 Tag (86400 Sek.){/s}" },
                                 { value:172800, description:"{s name='172800secDesc'}2 Tage (172800 Sek.){/s}" },
-                                { value:604800, description:"{s name='604800secDesc'}1 Woche (604800 Sek.){/s}" }
+                                { value:604800, description:"{s name='604800secDesc'}1 Woche (604800 Sek.){/s}" },
+                                { value:2592000, description:"{s name='2592000secDesc'}1 Monat (2592000 Sek.){/s}" }
                             ]
                         }),
                         mode: 'local',
