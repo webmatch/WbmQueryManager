@@ -108,7 +108,7 @@ class QueryManagerCron implements SubscriberInterface
                         fclose($outputBuffer);
 
                         $mailRecipient = $this->container->get('config')->getByNamespace('WbmQueryManager', 'mail_address_receiver');
-                        if ($cronJob['mailRecipient']) {
+                        if(!empty($cronJob['mailRecipient'])){
                             $mailRecipient = $cronJob['mailRecipient'];
                         }
                         if(!empty($mailRecipient)){
