@@ -12,6 +12,8 @@
             <label lang="de">CSV Exporte an E-Mail Adresse versenden</label>
             <label lang="en">Send CSV Exports to an E-Mail Address</label>
             <value/>
+            <description lang="de">Mehrere Empfänger kommasepariert angeben</description>
+            <description lang="en">Enter multiple recipients comma separated</description>
         </element>
         <element type="text">
             <name>csv_field_separator</name>

@@ -114,7 +114,7 @@ class QueryManagerCron implements SubscriberInterface
                         if(!empty($mailRecipient)){
                             $mail = clone $this->container->get('mail');
                             $mail->setFrom($this->container->get('config')->get('mail'));
-                            $mail->addTo(array_map('trim', explode(",", $mailRecipient)));
+                            $mail->addTo(array_map('trim', explode(',', $mailRecipient)));
                             $mail->setSubject($cronJob['name']);
                             $mail->setBodyText($rowCount . ' ' . $snippets->get('rowsAffected', 'Reihen betroffen'));
                             $mail->createAttachment(
