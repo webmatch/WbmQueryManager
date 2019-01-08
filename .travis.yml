@@ -13,6 +13,8 @@ env:
   matrix:
     - SHOPWARE_VERSION="5.2"
     - SHOPWARE_VERSION="5.3"
+    - SHOPWARE_VERSION="5.4"
+    - SHOPWARE_VERSION="5.5"
   global:
     - PLUGIN_NAME=WbmQueryManager
     - SHOPWARE_DIRECTORY=${HOME}/shopware
@@ -43,7 +45,7 @@ after_success:
 
 matrix:
   allow_failures:
-  - env: SHOPWARE_VERSION="5.3"
+  - env: SHOPWARE_VERSION="5.2"
   - php: nightly
 
 deploy:
