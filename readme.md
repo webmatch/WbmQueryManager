@@ -69,3 +69,11 @@ interval that Shopware cron-jobs can be executed at.
 Fetched rows of SELECT statements executed through cron-jobs will be logged as CSV files in the directory **var/logs** of the Shopware installation.
 By specifying an email address in the plugin configuration logged files will also be transmitted by email.
 
+License
+=====
+
+MIT
+
+This plugin is also commercially available through Shopware's community store. While the code itself is released under MIT license, the commercial distribution
+includes support through Webmatch GmbH and continous auto-updates. You may use this plugin without purchase but please be aware that you may receive notifications
+through Shopware about missing the according license. We have no influence on those notifications.
