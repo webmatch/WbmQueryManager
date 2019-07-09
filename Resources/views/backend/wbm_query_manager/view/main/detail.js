@@ -59,39 +59,15 @@ Ext.define('Shopware.apps.WbmQueryManager.view.main.Detail', {
             name: 'sqlString',
             flex: 1,
             allowBlank: true
-        });
-        
-        me.editorField.on('editorready', function(editorField, editor) {
-            editor.setOption("mode", 'text/x-mysql');
             //{if $autocompleteActive}
             //
-            editor.setOption("extraKeys", { "Ctrl-Space": "autocomplete" });
-            editor.setOption("hintOptions", {
-                tables: Ext.decode('{$hintOptions}')
-            });
-            var hintDelay = null;
-            editor.on("keyup", function (instance, event) {
-                if (instance.state.completionActive) {
-                    return;
+            ,completers: [{
+                getCompletions: function(editor, session, pos, prefix, callback) {
+                    callback(null, Ext.decode('{$hintOptions}'));
                 }
-                var cur = instance.getCursor(),
-                    token = instance.getTokenAt(cur),
-                    string = '';
-                if (token.string.match(/^[.`\w@]\w*$/)) {
-                    string = token.string;
-                }
-                if (string.length > 0) {
-                    CodeMirror.commands.autocomplete(instance, null, {
-                        completeSingle: false
-                    });
-                }
-            });
+            }]
             //{/if}
             //
-        });
-
-        me.on('resize', function(cmp, width, height) {
-            me.resizeEditor(cmp, cmp.editorField, width, height);
         });
         
         me.items = me.getItems();

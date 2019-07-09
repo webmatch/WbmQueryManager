@@ -29,13 +29,36 @@ class Shopware_Controllers_Backend_WbmQueryManager extends Shopware_Controllers_
         ) {
             $dbData = $this->container->getParameter('shopware.db');
             $sql = "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ?";
-            $tables = json_encode(
-                $this->container->get('shopware.db')->fetchAll(
-                    $sql,
-                    array($dbData['dbname']), \Zend_Db::FETCH_GROUP|\Zend_Db::FETCH_COLUMN
+            $tables = $this->container->get('shopware.db')->fetchAll(
+                $sql,
+                array($dbData['dbname']), \Zend_Db::FETCH_GROUP|\Zend_Db::FETCH_COLUMN
+            );
+            $columns = [];
+            foreach ($tables as $table => $content) {
+                foreach ($content as $column) {
+                    $columns[] = array(
+                        'caption' => $table . '.' . $column,
+                        'value' => '`' . $table . '`.`' . $column . '`',
+                        'meta' => 'Column'
+                    );
+                }
+            }
+            $hintOptions = json_encode(
+                array_merge(
+                    array_map(
+                        function($tableName) {
+                            return array(
+                                'caption' => $tableName,
+                                'value' => '`' . $tableName . '`',
+                                'meta' => 'Table'
+                            );
+                        },
+                        array_keys($tables)
+                    ),
+                    $columns
                 )
             );
-            $this->View()->hintOptions = $tables;
+            $this->View()->hintOptions = $hintOptions;
             $this->View()->autocompleteActive = true;
         }
     }

@@ -10,11 +10,6 @@
             <tag name="shopware.event_subscriber" />
         </service>
 
-        <service id="wbm_query_manager.subscriber.backend.post_dispatch" class="WbmQueryManager\Subscriber\Backend\PostDispatch">
-            <argument type="service" id="service_container" />
-            <tag name="shopware.event_subscriber" />
-        </service>
-
         <service id="wbm_query_manager.subscriber.backend.cron_query_manager" class="WbmQueryManager\Subscriber\Backend\QueryManagerCron">
             <argument type="service" id="service_container" />
             <tag name="shopware.event_subscriber" />
