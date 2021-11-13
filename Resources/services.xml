@@ -5,6 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <defaults public="true" />
         <service id="wbm_query_manager.subscriber.controller_wbm_query_manager" class="WbmQueryManager\Subscriber\Backend\QueryManagerController">
             <argument type="service" id="service_container" />
             <tag name="shopware.event_subscriber" />
